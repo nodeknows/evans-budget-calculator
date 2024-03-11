@@ -108,7 +108,7 @@ footer {
     gap: 3px;
 }
 
-.flexbox > div > div > p:first-of-type {
+.flexbox > div > div > p:first-of-type:not(#exception) {
     color: red;
 }
 
@@ -177,12 +177,36 @@ canvas {
     background-color: grey;
 }
 
+#exception-flex {
+}
+
+#exception-flex > button {
+    max-width: 25px;
+    max-height: 25px;
+    border: solid 2px black;
+    border-radius: 5px;
+}
+
+#exception-flex > button:hover {
+    transition: border-radius 100ms, background-color 100ms;
+    border-radius: 15px;
+    background-color: lightblue;
+}
+
+#hoverable {
+    position: relative;
+    background-color: lightblue;
+
+    border-radius: 25px;
+    border: solid 3px black;
+    padding: 15px;
+    position: absolute;
+
+    max-width: 300px;
+}
+
 @media (width <= 845px) {
     .flexbox > div {
         max-width: 100%;
     }
 };
-
-* {
-    background-color: rgb(128, 128, 128);
-}

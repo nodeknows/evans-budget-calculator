@@ -102,6 +102,8 @@ const intId = setInterval(function () {
                 const monthly = Math.round(base / 12);
                 const netmonthly = Math.round(monthly - (monthly * .3265) - 180)
 
+                console.log(monthly * .3265)
+
                 lockInput(editables.agi)
                 setInput(editables.agi, base)
 
@@ -195,7 +197,7 @@ let chart = new Chart(ctx, {
     data: {
         labels: [],
         datasets: [{
-            label: '$ In Dollars',
+            label: ' (USD) In Dollars',
             data: [0, 0, 0, 0, 0, 0, 0, 0],
         }]
     },
@@ -210,7 +212,7 @@ let chart = new Chart(ctx, {
 
 function updateChart(dataset, labels) {
     chart.data.datasets = [{
-        label: '(USD) In Dollars',
+        label: ' (USD) In Dollars',
         data: dataset,
     }]
 
@@ -218,3 +220,64 @@ function updateChart(dataset, labels) {
 
     chart.update()
 }
+
+// hows this calculated hoverable
+const triggerButton = document.querySelector('#exception-flex > button');
+const hoverDiv = document.getElementById('hoverable');
+const hoverContain = document.getElementById('hoverable-container')
+const calculables = document.querySelectorAll('#hoverable > ul > li')
+
+var template = {
+    0: "Federal Taxes - 12%",
+    1: "State Taxes - 7%",
+    2: "Social Security - 6.2%",
+    3: "Medicare - 1.45%",
+    4: "State Disability - 5%",
+    5: "Retirement Investment - 5%",
+    6: "Medical Insurance - $180",
+}
+
+function calcSpecific(index, value) {
+    value = Math.round(value)
+    for (let i = 0; i <= calculables.length-1; i++) {
+        if (i == index) {
+            const element = calculables[i];
+            element.innerHTML = template[i] + ` (\$${value})`
+        }
+    }
+}
+
+
+function reCalc() {
+    const MGI = parseInt(editables.mgi.value)
+    if (MGI > 0) {
+        calcSpecific(0, MGI*.12)
+        calcSpecific(1, MGI*.07)
+        calcSpecific(2, MGI*.062)
+        calcSpecific(3, MGI*.0145)
+        calcSpecific(4, MGI*.01)
+        calcSpecific(5, MGI*.05)
+        calcSpecific(6, 180)
+    }
+}
+
+function onDiv() {
+    hoverDiv.style.visibility = 'visible';
+}
+
+function offDiv() {
+    hoverDiv.style.visibility = 'collapse'
+}
+
+offDiv()
+
+function toggleDiv() {
+    if (hoverDiv.style.visibility == 'collapse') {
+        reCalc()
+        onDiv()
+    } else {
+        offDiv()
+    }
+}
+
+triggerButton.onclick = toggleDiv
