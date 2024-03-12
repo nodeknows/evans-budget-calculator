@@ -52,7 +52,7 @@ async function init() {
     let root = document.querySelector('#root');
 
     //create a variable to hold the URL of the JSON data source
-    let url = 'https://api-demo.cartwebapp.com/data/2024';
+    let url = 'https://eecu-data-server.vercel.app/data/2024';
 
     //create a variable to hold the JSON data
     let occupations = null;

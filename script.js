@@ -102,7 +102,7 @@ const intId = setInterval(function () {
                 const monthly = Math.round(base / 12);
                 const netmonthly = Math.round(monthly - (monthly * .3265) - 180)
 
-                console.log(monthly * .3265)
+                //console.log(monthly * .3265)
 
                 lockInput(editables.agi)
                 setInput(editables.agi, base)
